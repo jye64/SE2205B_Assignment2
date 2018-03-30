@@ -6,10 +6,10 @@ package birds;
  */
 public class BirdRecord {
     
-    DataKey key;  
-    String  about;    
-    String  sound;   
-    String  image;   
+    private DataKey key;  
+    private String  about;    
+    private String  sound;   
+    private String  image;   
 
     
     // default constructor

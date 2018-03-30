@@ -1,21 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="971.0" style="-fx-background-image: url(&quot;file:src/Birds/WesternBackground.png&quot;);" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="birds.BirdsController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="971.0" style="-fx-background-image: url(&quot;file:src/Birds/WesternBackground.png&quot;);" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="birds.BirdsController">
    <top>
       <MenuBar fx:id="mainMenu" BorderPane.alignment="CENTER">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-                  <MenuItem mnemonicParsing="false" text="Fill Dictionary" />
+                  <MenuItem mnemonicParsing="false" onAction="#loadDictionary" text="Fill Dictionary" />
               <MenuItem mnemonicParsing="false" onAction="#exit" text="Close" />
             </items>
           </Menu>
         </menus>
       </MenuBar>
    </top>
+   <left>
+      <Pane prefHeight="637.0" prefWidth="955.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="202.0" layoutY="660.0" prefHeight="17.0" prefWidth="67.0" text="Bird Name" />
+            <Label layoutX="469.0" layoutY="660.0" prefHeight="17.0" prefWidth="58.0" text="Bird Size" />
+            <ComboBox fx:id="birdSize" layoutX="548.0" layoutY="660.0" prefWidth="150.0" />
+            <TextField fx:id="birdName" layoutX="286.0" layoutY="660.0" />
+            <Button fx:id="find" layoutX="724.0" layoutY="660.0" mnemonicParsing="false" onAction="#find" text="Find" />
+            <Button fx:id="first" layoutX="317.0" layoutY="30.0" mnemonicParsing="false" onAction="#first" prefHeight="27.0" prefWidth="71.0" text="First" />
+            <Button fx:id="next" layoutX="422.0" layoutY="30.0" mnemonicParsing="false" onAction="#next" prefHeight="27.0" prefWidth="71.0" text="Next" />
+            <Button fx:id="previous" layoutX="527.0" layoutY="30.0" mnemonicParsing="false" onAction="#previous" prefHeight="27.0" prefWidth="71.0" text="Previous" />
+            <Button fx:id="last" layoutX="632.0" layoutY="30.0" mnemonicParsing="false" onAction="#last" prefHeight="27.0" prefWidth="71.0" text="Last" />
+            <Button fx:id="delete" layoutX="832.0" layoutY="178.0" mnemonicParsing="false" onAction="#delete" prefHeight="27.0" prefWidth="71.0" text="Delete" textFill="#fcf3f3" />
+            <Label fx:id="birdNameDisplayed" layoutX="81.0" layoutY="80.0" prefHeight="30.0" prefWidth="216.0" textFill="#076597">
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="403.0" layoutX="81.0" layoutY="240.0" stroke="BLACK" strokeType="INSIDE" width="822.0" />
+            <Button fx:id="play" layoutX="569.0" layoutY="406.0" mnemonicParsing="false" onAction="#play" prefHeight="74.0" prefWidth="80.0" text="Play" textFill="#f8f7f7" />
+            <Button fx:id="stop" layoutX="706.0" layoutY="406.0" mnemonicParsing="false" onAction="#stop" prefHeight="74.0" prefWidth="80.0" text="Stop" textFill="#fcfafa" />
+            <Label fx:id="birdText" layoutX="81.0" layoutY="120.0" prefHeight="104.0" prefWidth="711.0" textAlignment="JUSTIFY" textFill="#1c6c97" wrapText="true">
+               <font>
+                  <Font size="16.0" />
+               </font></Label>
+            <Pane fx:id="birdImageView" layoutX="81.0" layoutY="241.0" prefHeight="402.0" prefWidth="322.0" />
+         </children>
+      </Pane>
+   </left>
 </BorderPane>

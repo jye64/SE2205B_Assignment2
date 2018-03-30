@@ -5,8 +5,6 @@
  */
 package birds;
 
-import java.util.Stack;
-
 /**
  *
  * @author alanye
