@@ -84,7 +84,6 @@ public class BirdsController implements Initializable {
             String bird_About;
             String bird_Image;
             String bird_Sound;
-            //boolean isLoaded =false;
             
             input = new Scanner(new File(dictionaryFileName));
             while(input.hasNextLine()){
@@ -101,18 +100,15 @@ public class BirdsController implements Initializable {
                     BirdRecord newRecord = new BirdRecord(newKey,bird_About,bird_Sound,bird_Image);
                     try{
                         birdDictionary.insert(newRecord);
-                    }catch(DictionaryException e){
-                        displayAlert("ERROR: "+e.getMessage());
+                    }catch(DictionaryException ex){
+                        displayAlert(ex.getMessage());
                     }
-//                    if(!input.hasNextLine()){
-//                        isLoaded = true;
-//                        System.out.println("Dictionary is loaded");
-//                    }
                 }
             }
+            first();
  
         }catch(IOException ex){
-            displayAlert("ERROR: "+ex.getMessage());
+            displayAlert(ex.getMessage());
         }
          
     }
@@ -121,12 +117,10 @@ public class BirdsController implements Initializable {
     public void first(){
         try{
             birdRecord = birdDictionary.smallest();
-            birdNameDisplayed.setText(birdRecord.getDataKey().getBirdName());
-            birdText.setText(birdRecord.getAbout());
-            birdImageView.getChildren().add(new ImageView(new Image(new File(birdRecord.getImage()).toURI().toString())));
+            update();
             System.out.println(new File(birdRecord.getImage()).toURI().toString());
         }catch (DictionaryException ex){
-            displayAlert("ERROR: "+ ex.getMessage());
+            displayAlert(ex.getMessage());
         }   
     }
     
@@ -134,11 +128,9 @@ public class BirdsController implements Initializable {
     public void last(){
         try{
             birdRecord = birdDictionary.largest();
-            birdNameDisplayed.setText(birdRecord.getDataKey().getBirdName());
-            birdText.setText(birdRecord.getAbout());
-            birdImageView.getChildren().add(new ImageView(new Image(new File(birdRecord.getImage()).toURI().toString())));        
+            update();
         }catch(DictionaryException ex){
-            displayAlert("ERROR: "+ ex.getMessage());
+            displayAlert(ex.getMessage());
         }
     }
     
@@ -146,24 +138,22 @@ public class BirdsController implements Initializable {
     public void next() throws DictionaryException{
         try{
             birdRecord = birdDictionary.successor(birdRecord.getDataKey());
-            birdNameDisplayed.setText(birdRecord.getDataKey().getBirdName());
-            birdText.setText(birdRecord.getAbout());
-            birdImageView.getChildren().add(new ImageView(new Image(new File(birdRecord.getImage()).toURI().toString())));
+            update();
         }catch (DictionaryException ex){
-            displayAlert("ERROR: "+ ex.getMessage());
+            displayAlert(ex.getMessage());
         }
+        stop();
     }
     
     @FXML
     public void previous() throws DictionaryException{
         try{
             birdRecord = birdDictionary.predecessor(birdRecord.getDataKey());
-            birdNameDisplayed.setText(birdRecord.getDataKey().getBirdName());
-            birdText.setText(birdRecord.getAbout());
-            birdImageView.getChildren().add(new ImageView(new Image(new File(birdRecord.getImage()).toURI().toString())));
+            update();
         }catch(DictionaryException ex){
-            displayAlert("ERROR: "+ ex.getMessage());
+            displayAlert(ex.getMessage());
         }
+        stop();
     }
 
     @FXML
@@ -175,13 +165,10 @@ public class BirdsController implements Initializable {
                 birdText.setText("");
                 birdImageView.getChildren().clear();
             }else{
-                birdRecord = birdDictionary.successor(birdRecord.getDataKey());
-                birdNameDisplayed.setText(birdRecord.getDataKey().getBirdName());
-                birdText.setText(birdRecord.getAbout());
-                birdImageView.getChildren().add(new ImageView(new Image(new File(birdRecord.getImage()).toURI().toString())));  
+                next();
             }
         }catch(DictionaryException ex){
-            displayAlert("ERROR: "+ ex.getMessage());
+            displayAlert(ex.getMessage());
         }
     }
     
@@ -190,11 +177,9 @@ public class BirdsController implements Initializable {
         DataKey newKey = new DataKey(birdName.getText(), readCombo());
         try{
             birdRecord = birdDictionary.find(newKey);
-            birdNameDisplayed.setText(birdRecord.getDataKey().getBirdName());
-            birdText.setText(birdRecord.getAbout());
-            birdImageView.getChildren().add(new ImageView(new Image(new File(birdRecord.getImage()).toURI().toString())));
+            update();
         }catch(DictionaryException ex){
-            displayAlert("ERROR: "+ ex.getMessage());
+            displayAlert(ex.getMessage());
         }
     }
     
@@ -204,15 +189,22 @@ public class BirdsController implements Initializable {
         player = new MediaPlayer(birdSound);
         System.out.println(new File(birdRecord.getSound()).toURI().toString());
         player.play();  
-        play.setStyle("-fx-background-color: #008000");
-        stop.setStyle("-fx-background-color: #90EE90");
+        play.setStyle("-fx-background-color: #90EE90");
+        stop.setStyle("-fx-background-color: #008000");
     }
     
     @FXML
     public void stop(){
-        player.stop();
-        play.setStyle("-fx-background-color: #90EE90");
-        stop.setStyle("-fx-background-color: #008000");
+        if(player!=null)
+            player.stop();
+        stop.setStyle("-fx-background-color: #90EE90");
+        play.setStyle("-fx-background-color: #008000");
+    }
+    
+    private void update(){
+        birdNameDisplayed.setText(birdRecord.getDataKey().getBirdName());
+        birdText.setText(birdRecord.getAbout());
+        birdImageView.getChildren().add(new ImageView(new Image(new File(birdRecord.getImage()).toURI().toString())));
     }
     
     private int readCombo(){
@@ -250,6 +242,7 @@ public class BirdsController implements Initializable {
 
             Scene scene = new Scene(ERROR);
             Stage stage = new Stage();
+            stage.setTitle("Dictionary Exception");
             stage.setScene(scene);
 
             stage.getIcons().add(new Image("file:src/birds/WesternLogo.png"));
