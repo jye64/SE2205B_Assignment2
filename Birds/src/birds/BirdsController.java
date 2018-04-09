@@ -51,7 +51,7 @@ public class BirdsController implements Initializable {
     
     @FXML
     private Label birdText;
-   
+    
     @FXML
     Button find;
     @FXML
@@ -118,7 +118,6 @@ public class BirdsController implements Initializable {
         try{
             birdRecord = birdDictionary.smallest();
             update();
-            System.out.println(new File(birdRecord.getImage()).toURI().toString());
         }catch (DictionaryException ex){
             displayAlert(ex.getMessage());
         }   
@@ -164,6 +163,7 @@ public class BirdsController implements Initializable {
                 birdNameDisplayed.setText("");
                 birdText.setText("");
                 birdImageView.getChildren().clear();
+                displayAlert("No more birds in the database to show.");
             }else{
                 next();
             }

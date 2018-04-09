@@ -76,7 +76,7 @@ public class OrderedDictionary implements OrderedDictionaryADT{
     @Override
     public void remove(DataKey k) throws DictionaryException {
         //NB: throw exception in deleteRec
-        deleteRec(root,k);  
+        root = deleteRec(root,k);  
     }
     
     private Node deleteRec(Node root, DataKey key) throws DictionaryException
